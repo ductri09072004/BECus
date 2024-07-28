@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+
+  backend:
+    build:
+      context: . 
+    container_name: my-backend
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mongo
+    environment:
+      -  MONGO_URI=mongodb+srv://blueduck0907:Fcsunny0907@demo1.rpbijnx.mongodb.net/ThienPhucGH
+    networks:
+      - my_network
+    volumes:
+      - ./src:/app/src  
+
+networks:
+  my_network:
+    driver: bridge
